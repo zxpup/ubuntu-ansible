@@ -1,0 +1,18 @@
+#!/user/bin/env ansible-playbook
+---
+- name: include default var
+  include_vars:
+    file:  vars/main.yml
+
+- name: Create phd user with admin privileges
+  user:
+    name: "{{ phabricator_phd_user }}"
+    shell: /bin/bash
+    group: admin
+    append: yes
+
+- name: Setup phabricator
+  include: setup_phabricator.yml
+
+- name: Configuring phabricator
+  include: config_phabricator.yml

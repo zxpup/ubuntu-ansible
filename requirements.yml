@@ -1,0 +1,32 @@
+- name: pip
+  src: https://github.com/zxpup/ansible-role-pip.git
+
+- name: php
+  src: https://github.com/zxpup/ansible-role-php.git
+  
+- name: java
+  src: https://github.com/zxpup/ansible-role-java.git
+  
+- name: jenkins
+  src: https://github.com/zxpup/ansible-role-jenkins.git
+
+- name: php-mysql
+  src: https://github.com/zxpup/ansible-role-php-mysql.git
+  
+- name: nginx
+  src: https://github.com/zxpup/ansible-role-nginx.git
+  
+- name: gogs
+  src: https://github.com/zxpup/ansible-role-gogs.git
+  
+- name: php-versions
+  src: https://github.com/zxpup/ansible-role-php-versions.git
+  
+- name: mysql
+  src: https://github.com/zxpup/ansible-role-mysql.git
+  
+- name: phabricator
+  src: https://github.com/zxpup/ansible-role-phabricator.git
+  
+- name: git
+  src: https://github.com/zxpup/ansible-role-git.git

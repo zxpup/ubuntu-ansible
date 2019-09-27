@@ -1,0 +1,32 @@
+---
+nginx_client_max_body_size: 32M
+php_post_max_size: 32M
+php_memory_limit: -1
+php_upload_max_filesize: 32M
+php_max_input_vars: 3000
+php_default_version_debian: 7.3
+php_webserver_daemon: nginx
+php_enable_php_fpm: true
+php_packages_extra:
+  - php{{ php_default_version_debian }}-zip
+  - php{{ php_default_version_debian }}-ldap
+# Configure OPcache for Production
+php_opcache_validate_timestamps: 0
+
+nginx_worker_connections: 1024
+
+
+phabricator_hostname: 127.0.0.1.xip.io
+phabricator_install_path: "{{ ansible_env.HOME }}"
+
+
+#phabricator_repos:
+  #phabricator: https://github.com/phacility/phabricator.git
+  #arcanist: https://github.com/phacility/arcanist.git
+  #libphutil: https://github.com/phacility/libphutil.git
+
+
+mysql_root_password: root
+mysql_sql_mode: STRICT_ALL_TABLES
+
+jenkins_hostname: localhost

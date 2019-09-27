@@ -1,0 +1,8 @@
+---
+- name: setup phabricator
+  git:
+    repo: "{{item.value}}"
+    dest: "{{ phabricator_install_path }}/{{item.key}}"
+    version: master
+    accept_hostkey: yes
+  with_dict: "{{phabricator_repos}}"

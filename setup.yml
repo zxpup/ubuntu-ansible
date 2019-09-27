@@ -1,0 +1,19 @@
+---
+- name: steup OpenLDAP + Jenkins + Phabricator + Gogs
+  hosts: all
+  gather_facts: True
+  vars_files:
+    - vars/main.yml
+  roles:
+    - role: geerlingguy.nginx
+    - role: geerlingguy.mysql
+    - role: geerlingguy.php-versions
+    - role: geerlingguy.php
+    - role: geerlingguy.php-mysql
+    - role: geerlingguy.git
+    - role: directory_copy
+    - role: phabricator
+    - role: geerlingguy.java
+    - role: geerlingguy.jenkins
+    - role: geerlingguy.gogs
+

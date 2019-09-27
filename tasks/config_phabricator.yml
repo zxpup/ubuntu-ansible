@@ -1,0 +1,59 @@
+---
+- name: Config nginx host
+  template:
+    src: vhost.conf.j2
+    dest: "/etc/nginx/conf.d/{{ phabricator_domain }}.conf"
+  become: yes
+
+- name: Set phabricator mysql user
+  command: "./bin/config set mysql.user root"
+  args:
+    chdir: "{{ phabricator_install_path }}/phabricator"
+
+- name: Set phabricator mysql port
+  command: "./bin/config set mysql.pass root"
+  args:
+    chdir: "{{ phabricator_install_path }}/phabricator"
+
+- name: Upgrade Phabricator database
+  command: "./bin/storage upgrade --force"
+  args:
+    chdir: "{{ phabricator_install_path }}/phabricator"
+
+- name: Configuring File Storage
+  command: "./bin/config set storage.mysql-engine.max-size 8388608"
+  args:
+    chdir: "{{ phabricator_install_path }}/phabricator"
+
+- name: Configuring base uri
+  command: "./bin/config set phabricator.base-uri 'http://{{ phabricator_domain }}/'"
+  args:
+    chdir: "{{ phabricator_install_path }}/phabricator"
+
+- name: Install Pygments package
+  apt:
+    name: python-pygments
+    state: present
+  become: yes
+
+- name: Enable Pygments in Phabricator configuration
+  command: "./bin/config set pygments.enabled true"
+  args:
+    chdir: "{{ phabricator_install_path }}/phabricator"
+
+- name: Add systemd phabricator-phd service
+  template: src=phabricator-phd.service.j2
+            dest=/lib/systemd/system/phabricator-phd.service
+  become: yes
+
+- name: Enable and start phd daemon
+  systemd:
+    name: phabricator-phd
+    state: started
+    enabled: true
+  become: yes
+
+- name: Configure phd.user
+  command: ./bin/config set phd.user {{ phabricator_phd_user }}
+  args:
+    chdir: "{{ phabricator_install_directory }}"
